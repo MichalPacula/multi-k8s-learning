@@ -27,7 +27,7 @@ deploy:
   provider: elasticbeanstalk
   region: eu-north-1
   app: multi-docker-learn
-  env: Multi-docker-learn
+  env: Multi-docker-learn-env
   bucket_name: elasticbeanstalk-eu-north-1-994287625480
   bucket_path: multi-docker-learn
   on:
