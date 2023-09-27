@@ -13,3 +13,10 @@ after_success:
   - docker build -t mpac60/multi-nginx-learning ./nginx
   - docker build -t mpac60/multi-server-learning ./server
   - docker build -t mpac60/multi-worker-learning ./worker
+  #Log in to the docker CLI
+  echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push mpac60/multi-client-learning
+  - docker push mpac60/multi-nginx-learning
+  - docker push mpac60/multi-server-learning
+  - docker push mpac60/multi-worker-learning
