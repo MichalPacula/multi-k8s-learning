@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t mpac60/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true mpac60/react-test npm test
+
+after_success:
+  - docker build -t mpac60/multi-client-learning ./client
+  - docker build -t mpac60/multi-nginx-learning ./nginx
+  - docker build -t mpac60/multi-server-learning ./server
+  - docker build -t mpac60/multi-worker-learning ./worker
