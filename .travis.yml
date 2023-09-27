@@ -11,14 +11,26 @@ script:
   - docker run -e CI=true mpac60/react-test npm test
 
 after_success:
-  - docker build -t mpac60/multi-client ./client
-  - docker build -t mpac60/multi-nginx ./nginx
-  - docker build -t mpac60/multi-server ./server
-  - docker build -t mpac60/multi-worker ./worker
+  - docker build -t mpac60/multi-client-learning ./client
+  - docker build -t mpac60/multi-nginx-learning ./nginx
+  - docker build -t mpac60/multi-server-learning ./server
+  - docker build -t mpac60/multi-worker-learning ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push mpac60/multi-client
-  - docker push mpac60/multi-nginx
-  - docker push mpac60/multi-server
-  - docker push mpac60/multi-worker
+  - docker push mpac60/multi-client-learning
+  - docker push mpac60/multi-nginx-learning
+  - docker push mpac60/multi-server-learning
+  - docker push mpac60/multi-worker-learning
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-north-1
+  app: multi-docker-learning
+  env: Multi-docker-learning-env
+  bucket_name: elasticbeanstalk-eu-north-1-994287625480
+  bucket_path: multi-docker-learning
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
